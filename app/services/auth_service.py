@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from app.models import User, OTP, RevokedToken
 from app.security import hash_password, verify_password, create_access_token, decode_access_token
 from app.services.otp_service import generate_and_store_otp, create_otp, password_reset_otp
-from app.utils.util import response
+from app.utils.util import HTTPResponse
 
 
 def create_user(payload, db):
@@ -15,14 +15,14 @@ def create_user(payload, db):
     db.add(user)
     db.commit()
     create_otp(db, payload.email)
-    return {"message": "User registered. Check email for OTP"}
+    return HTTPResponse(status_code=201, message="User registered. Check email for OTP").return_response()
 
 
 def verify_user_email(payload, db):
 
     user = db.query(User).filter_by(email=payload.email).first()
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="User does not exist")
 
     otp_entry = db.query(OTP).filter_by(user_id=user.id).first()
     if not otp_entry:
@@ -39,9 +39,7 @@ def verify_user_email(payload, db):
     user = db.query(User).filter_by(email=payload.email).first()
     user.is_verified = True
     db.commit()
-
-    return {"message": "OTP Verified"}
-
+    return HTTPResponse(status_code=200, message="Email verified successfully").return_response()
 
 def resend_verification_code(email, db):
     user = db.query(User).filter_by(email=email).first()
@@ -52,16 +50,14 @@ def resend_verification_code(email, db):
         raise HTTPException(status_code=400, detail="User is already verified")
 
     generate_and_store_otp(db, email, user.id)
-    return {"message": "OTP resent successfully"}
-
+    return HTTPResponse(status_code=200, message="OTP resent successfully").return_response()
 
 def send_password_reset_otp(email, db):
     user = db.query(User).filter(User.email == email).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     password_reset_otp(db, email,  user.id)
-
-    return {"message": "OTP sent to your email"}
+    return HTTPResponse(status_code=200, message="OTP sent successfully").return_response()
 
 def update_password_with_otp(payload, db):
     user = db.query(User).filter_by(email=payload.email).first()
@@ -80,8 +76,7 @@ def update_password_with_otp(payload, db):
 
     user.hashed_password = hash_password(payload.new_password)
     db.commit()
-
-    return {"message": "Password reset successfully"}
+    return HTTPResponse(status_code=200, message="Password updated successfully").return_response()
 
 def login_user(payload, db):
     user = db.query(User).filter_by(email=payload.email).first()
@@ -89,8 +84,8 @@ def login_user(payload, db):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     token = create_access_token({"sub": user.email})
-    return {"access_token": token, "token_type": "bearer"}
-
+    data =  {"access_token": token, "token_type": "bearer"}
+    return HTTPResponse(status_code=200, message="Login successful", data=data).return_response()
 
 def revoke_access_token(token, db):
     payload = decode_access_token(token)
@@ -105,5 +100,4 @@ def revoke_access_token(token, db):
     revoked_token = RevokedToken(token=token)
     db.add(revoked_token)
     db.commit()
-
-    return {"message": "Logout successful. Token has been blacklisted."}
+    return HTTPResponse(status_code=200, message="Logout successful").return_response()
