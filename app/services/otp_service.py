@@ -22,7 +22,7 @@ def create_otp(db: Session, email: str):
     db.add(otp_entry)
     db.commit()
     print(f"email_opt-1:{otp_code}")
-    # send_email(email, "Your OTP Code", f"Your OTP is {otp_code}")
+    send_email(email, "Your OTP Code", f"Your OTP is {otp_code}")
 
 def generate_and_store_otp(db: Session, email: str, user_id :str):
     """Creates a new OTP for the user and sends it via email if the user exists."""
@@ -41,7 +41,7 @@ def generate_and_store_otp(db: Session, email: str, user_id :str):
     print(f"email_opt-2:{otp_code}")
 
     # Send OTP email
-    #send_email(email, "Password Reset OTP", f"Your OTP code is {otp_code}")
+    send_email(email, "Password Reset OTP", f"Your OTP code is {otp_code}")
 
 def password_reset_otp(db: Session, email: str, user_id):
     # Generate OTP and expiry time
@@ -62,4 +62,4 @@ def password_reset_otp(db: Session, email: str, user_id):
     # Send OTP via email
     subject = "Password Reset OTP"
     body = f"Your OTP for password reset is: {otp_code}. It expires in 10 minutes."
-    # send_email(email, subject, body)
+    send_email(email, subject, body)
