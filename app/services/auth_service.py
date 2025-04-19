@@ -6,12 +6,13 @@ from app.models import User, OTP, RevokedToken
 from app.security import hash_password, verify_password, create_access_token, decode_access_token
 from app.services.otp_service import generate_and_store_otp, create_otp, password_reset_otp
 from app.utils.util import HTTPResponse
+from app.schemas import UserResponse, TokenResponse
 
 
 def create_user(payload, db):
     if db.query(User).filter(User.email == payload.email).first():
         raise HTTPException(status_code=400, detail="Email already registered")
-    user = User(email=payload.email, hashed_password=hash_password(payload.password), is_verified=False)
+    user = User(email=payload.email,  username=payload.username, hashed_password=hash_password(payload.password), is_verified=False)
     db.add(user)
     db.commit()
     create_otp(db, payload.email)
@@ -84,20 +85,24 @@ def login_user(payload, db):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     token = create_access_token({"sub": user.email})
-    data =  {"access_token": token, "token_type": "bearer"}
+    token_data = TokenResponse(access_token=token, token_type="bearer")
+    user_data = UserResponse(
+        id=user.id,
+        email=user.email,
+        username=user.username,
+        is_verified=user.is_verified
+    )
+    data = {"token": token_data.dict(), "user": user_data.dict()}
     return HTTPResponse(status_code=200, message="Login successful", data=data).return_response()
 
 def revoke_access_token(token, db):
-    payload = decode_access_token(token)
-    if not payload:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
     # Check if token is already revoked
-    if db.query(RevokedToken).filter_by(token=token).first():
+    if db.query(RevokedToken).filter(RevokedToken.token == token).first():
         raise HTTPException(status_code=400, detail="Token already revoked")
-
-    # Add the token to revoked tokens
+    
+    # Add token to revoked tokens
     revoked_token = RevokedToken(token=token)
     db.add(revoked_token)
     db.commit()
-    return HTTPResponse(status_code=200, message="Logout successful").return_response()
+    
+    return HTTPResponse(status_code=200, message="Logged out successfully").return_response()
