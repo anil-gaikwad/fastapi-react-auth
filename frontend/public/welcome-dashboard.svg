@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Welcome Dashboard</title>
+    <g id="welcome-dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="background" fill="#E6F7FF" cx="100" cy="100" r="100"></circle>
+        <path d="M100,40 C122.09139,40 140,57.90861 140,80 C140,102.09139 122.09139,120 100,120 C77.90861,120 60,102.09139 60,80 C60,57.90861 77.90861,40 100,40 Z" id="face" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <path d="M100,60 C111.045695,60 120,68.954305 120,80 C120,91.045695 111.045695,100 100,100 C88.954305,100 80,91.045695 80,80 C80,68.954305 88.954305,60 100,60 Z" id="smile" fill="#4A90E2" fill-rule="nonzero"></path>
+        <circle id="left-eye" fill="#4A90E2" cx="80" cy="70" r="5"></circle>
+        <circle id="right-eye" fill="#4A90E2" cx="120" cy="70" r="5"></circle>
+        <path d="M100,120 L100,160" id="body" stroke="#4A90E2" stroke-width="8" stroke-linecap="round"></path>
+        <path d="M60,140 L100,120 L140,140" id="arms" stroke="#4A90E2" stroke-width="8" stroke-linecap="round"></path>
+    </g>
+</svg> 
