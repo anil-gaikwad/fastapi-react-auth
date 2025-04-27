@@ -1,7 +1,7 @@
 import logging
 from sqlalchemy.exc import SQLAlchemyError
-from app.database import engine, Base
-from app.models import User, OTP, RevokedToken
+from backend.database import engine, Base
+from backend.models import User, OTP, RevokedToken
 
 # Configure logging
 logging.basicConfig(

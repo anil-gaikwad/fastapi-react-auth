@@ -3,11 +3,11 @@ import os
 from fastapi import FastAPI, Request
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
-from app.routes.auth_router import auth_router
-from app.database import Base, engine
+from backend.routes.auth_router import auth_router
+from backend.database import Base, engine
 from contextlib import asynccontextmanager
 from starlette.middleware.cors import CORSMiddleware
-from app.middlewares.security_middleware import SecurityMiddleware
+from backend.middlewares.security_middleware import SecurityMiddleware
 
 # Configure logging
 logging.basicConfig(
@@ -96,7 +96,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "app.main:app",
+        "backend.main:app",
         host="0.0.0.0",
         port=8000,
         reload=True,
