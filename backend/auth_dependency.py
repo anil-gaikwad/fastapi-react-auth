@@ -4,10 +4,10 @@ from sqlalchemy.orm import Session
 import jwt
 from jwt.exceptions import InvalidTokenError
 from dotenv import load_dotenv
-from app.database import get_db
-from app.models import User
-from app.security import SECRET_KEY, ALGORITHM
-from app.utils.util import HTTPResponse
+from backend.database import get_db
+from backend.models import User
+from backend.security import SECRET_KEY, ALGORITHM
+from backend.utils.util import HTTPResponse
 
 load_dotenv()
 
