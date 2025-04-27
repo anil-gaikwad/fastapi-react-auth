@@ -5,7 +5,7 @@ A full-stack authentication application built with FastAPI and React.
 ## Project Structure
 
 ```
-fastapi_auth/
+fastapi-react-auth/
 ├── app/                  # Backend FastAPI application
 │   ├── main.py           # Main application entry point
 │   ├── routes/            # API routes
