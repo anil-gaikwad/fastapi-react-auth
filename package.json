@@ -1,17 +1,17 @@
 {
-  "name": "fastapi-auth",
+  "name": "fastapi-react-auth",
   "version": "1.0.0",
   "description": "Full-stack authentication application with FastAPI and React",
   "main": "index.js",
   "scripts": {
-    "start:backend": "python -m uvicorn app.main:app --reload",
+    "start:backend": "python -m uvicorn backend.main:app --reload",
     "start:frontend": "cd frontend && npm start",
     "install:frontend": "cd frontend && npm install",
     "build:frontend": "cd frontend && npm run build",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "db:start": "docker run --name fastapi_auth_db -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb -p 5432:5432 -d postgres:16",
+  "db:start": "docker run --name fastapi_auth_db -e POSTGRES_USER=awesome_user -e POSTGRES_PASSWORD=awesome_pass -e POSTGRES_DB=awesome_db -p 5432:5432 -d postgres:16",
     "db:stop": "docker stop fastapi_auth_db && docker rm fastapi_auth_db",
-    "db:init": "python -m app.db_init"
+    "db:init": "python -m backend.db_init"
   },
   "keywords": [
     "fastapi",
@@ -23,4 +23,4 @@
   "devDependencies": {
     "concurrently": "^8.2.2"
   }
-} 
+}
