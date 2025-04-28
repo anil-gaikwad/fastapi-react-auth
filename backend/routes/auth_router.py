@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.database import get_db
-from app.response import Response
-from app.schemas import (
+from backend.database import get_db
+from backend.response import Response
+from backend.schemas import (
     UserCreate, EmailVerification, UserLogin, ForgotPassword, 
     LogOut, UserBase
 )
 
-from app.services.auth_service import (create_user, resend_verification_code,
-                                       verify_user_email, update_password_with_otp,
-                                       revoke_access_token, login_user, send_password_reset_otp)
+from backend.services.auth_service import (create_user, resend_verification_code,
+                                           verify_user_email, update_password_with_otp,
+                                           revoke_access_token, login_user, send_password_reset_otp)
 
 auth_router = APIRouter(prefix="/auth", tags=["Authentication"])
 
