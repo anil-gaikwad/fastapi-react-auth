@@ -6,10 +6,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://myuser:mypassword@db:5432/mydb
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - db
     restart: always
+    volumes:
+      - ./backend:/backend
 
   frontend:
     build:
@@ -20,9 +22,8 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/frontend
-      - /frontend/node_modules
     environment:
-      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
     depends_on:
       - api
     restart: always
@@ -32,9 +33,9 @@ services:
     container_name: fastapi_auth_db
     restart: always
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: auth_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
