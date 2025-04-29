@@ -1,7 +1,7 @@
 from typing import Optional, Union, List, Dict, Any
 from fastapi.responses import JSONResponse
 
-from app.response import Response
+from backend.response import Response
 
 
 class HTTPResponse:

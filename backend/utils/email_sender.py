@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-from app.config import EMAIL_HOST, EMAIL_PORT, EMAIL_USERNAME, EMAIL_PASSWORD
+from backend.config import EMAIL_HOST, EMAIL_PORT, EMAIL_USERNAME, EMAIL_PASSWORD
 
 import logging
 
