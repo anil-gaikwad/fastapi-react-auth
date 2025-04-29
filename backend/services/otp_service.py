@@ -1,8 +1,8 @@
 import random
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
-from app.models import OTP, User
-from app.utils.email_sender import send_email
+from backend.models import OTP, User
+from backend.utils.email_sender import send_email
 
 
 def generate_otp():

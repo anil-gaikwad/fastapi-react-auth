@@ -2,11 +2,11 @@ from datetime import datetime, timezone, timedelta
 
 from fastapi import HTTPException
 
-from app.models import User, OTP, RevokedToken
-from app.security import hash_password, verify_password, create_access_token, decode_access_token
-from app.services.otp_service import generate_and_store_otp, create_otp, password_reset_otp
-from app.utils.util import HTTPResponse
-from app.schemas import UserResponse, TokenResponse
+from backend.models import User, OTP, RevokedToken
+from backend.security import hash_password, verify_password, create_access_token, decode_access_token
+from backend.services.otp_service import generate_and_store_otp, create_otp, password_reset_otp
+from backend.utils.util import HTTPResponse
+from backend.schemas import UserResponse, TokenResponse
 
 
 def create_user(payload, db):
